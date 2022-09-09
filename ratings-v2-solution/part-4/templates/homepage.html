@@ -39,20 +39,4 @@
       <input type="submit">
     </p>
   </form>
-
-  {% if logged_in == True %}
-    <form action="/new-rating" method="POST">
-      <p>
-        Movie Title <input type="text" name="title">
-      </p>
-
-      <p>
-        Score <input type="number" name="score" min="1" max="5">
-      </p>
-
-      <p>
-        <input type="submit">
-      </p>
-    </form>
-  {% endif %}
 {% endblock %}

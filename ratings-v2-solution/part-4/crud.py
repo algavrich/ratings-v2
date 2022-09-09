@@ -12,18 +12,19 @@ def create_user(email, password):
 
 
 def get_users():
-    """Return a list of all users."""
+    """Return all users."""
 
     return User.query.all()
 
+
 def get_user_by_id(user_id):
-    """Returns user with a particular ID."""
+    """Return a user by primary key."""
 
     return User.query.get(user_id)
 
 
 def get_user_by_email(email):
-    """Returns user from given email."""
+    """Return a user by email."""
 
     return User.query.filter(User.email == email).first()
 
@@ -31,10 +32,12 @@ def get_user_by_email(email):
 def create_movie(title, overview, release_date, poster_path):
     """Create and return a new movie."""
 
-    movie = Movie(title=title, 
-                overview=overview, 
-                release_date=release_date, 
-                poster_path=poster_path)
+    movie = Movie(
+        title=title,
+        overview=overview,
+        release_date=release_date,
+        poster_path=poster_path,
+    )
 
     return movie
 
@@ -46,26 +49,25 @@ def get_movies():
 
 
 def get_movie_by_id(movie_id):
-    """Return movie with a particular ID."""
+    """Return a movie by primary key."""
 
     return Movie.query.get(movie_id)
-
-
-def get_movie_by_title(title):
-    """Return movie with a particular title."""
-
-    return Movie.query.filter(Movie.title == title).first()
 
 
 def create_rating(user, movie, score):
     """Create and return a new rating."""
 
-    rating = Rating(user=user,
-                    movie=movie,
-                    score=score)
+    rating = Rating(user=user, movie=movie, score=score)
 
     return rating
 
-if __name__ == '__main__':
+
+def update_rating(rating_id, new_score):
+    """ Update a rating given rating_id and the updated score. """
+    rating = Rating.query.get(rating_id)
+    rating.score = new_score
+
+if __name__ == "__main__":
     from server import app
+
     connect_to_db(app)
