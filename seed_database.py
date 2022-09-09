@@ -29,11 +29,27 @@ for movie in movie_data:
                                     movie['overview'],
                                     movie['poster_path'])
 
-    release_date = datetime.strptime(movie['release_date'], "%d-%b-%Y")
+    release_date = datetime.strptime(movie['release_date'], "%Y-%m-%d")
 
     # Create a movie here and append it to movies_in_db
     new_movie = crud.create_movie(title, overview, release_date, poster_path)
     movies_in_db.append(new_movie)
 
 model.db.session.add_all(movies_in_db)
+model.db.session.commit()
+
+for n in range(10):
+    email = f'user{n}@test.com'  # Voila! A unique email!
+    password = 'test'
+
+    new_user = crud.create_user(email, password)
+    model.db.session.add(new_user)
+
+    for m in range(10):
+        movie = choice(movies_in_db)
+        score = randint(1, 5)
+
+        new_rating = crud.create_rating(new_user, movie, score)
+        model.db.session.add(new_rating)
+
 model.db.session.commit()
